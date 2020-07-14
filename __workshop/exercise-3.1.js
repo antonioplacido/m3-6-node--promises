@@ -25,4 +25,3 @@ const getIssPosition = () => {
 };
 
 getIssPosition().then((result) => console.log(result));
-console.log(newAbr);

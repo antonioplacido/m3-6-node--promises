@@ -2,15 +2,15 @@
 // ---------------------------------
 
 const opencage = require("opencage-api-client");
+
 require("dotenv").config();
 // dont json or parse, its been sent already parsed
 const getPositionFromAddress = (address) => {
   const requestObj = {
-    key: "<MY_API_KEY>",
-    q: "<QUERY_STRING>",
+    key: process.env.OPENCAGE_API_KEY,
+    q: address,
   };
-
-  // return something...
+  return opencage.geocode(requestObj);
 };
 
 getPositionFromAddress(
