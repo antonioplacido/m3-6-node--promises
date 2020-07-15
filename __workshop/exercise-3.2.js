@@ -2,17 +2,24 @@
 // ---------------------------------
 
 const opencage = require("opencage-api-client");
+require("dotenv").config({ path: __dirname + "../../.env" });
 
-require("dotenv").config();
-// dont json or parse, its been sent already parsed
 const getPositionFromAddress = (address) => {
   const requestObj = {
     key: process.env.OPENCAGE_API_KEY,
     q: address,
   };
-  return opencage.geocode(requestObj);
+  return opencage
+    .geocode(requestObj)
+    .then((response) => response.results[0].geometry)
+
+    .catch((error) => {
+      console.log(`error`, error.message);
+    });
 };
 
 getPositionFromAddress(
-  "1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"
+  "8752 rue Waverly, Montréal, QC H2N 1T6"
 ).then((response) => console.log(response));
+
+// DONE?
