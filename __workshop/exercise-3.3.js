@@ -1,18 +1,27 @@
 // Exercise 3.3 - `getAddressPosition`
 // ---------------------------------
 
-const opencage = require('opencage-api-client');
-require('dotenv').config();
+const opencage = require("opencage-api-client");
+require("dotenv").config({ path: __dirname + "../../.env" });
 
-function getAddressFromPosition(lat, lng) {
+const getAddressFromPosition = (address) => {
   const requestObj = {
-    key: '<MY_API_KEY>',
-    q: '<QUERY_STRING>',
+    key: process.env.OPENCAGE_API_KEY,
+    q: address,
   };
+  return opencage
+    .geocode(requestObj)
+    .then((response) => {
+      return response.results[0].formatted;
+    })
 
-  // return ...
-}
+    .catch((error) => {
+      console.log(`error`, error.message);
+    });
+};
 
-getAddressFromPosition('48.8584', '2.2945').then((response) =>
-  console.log(response)
-);
+getAddressFromPosition("45.539518, -73.645236").then((response) => {
+  console.log(response);
+});
+
+// 5 Avenue anatole france = "48.8584", "2.2945"
